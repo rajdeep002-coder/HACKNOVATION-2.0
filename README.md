@@ -1,71 +1,97 @@
 # HACKNOVATION-2.0
 NeuralShield
+
 Intelligent Web Application Firewall (WAF)
-->Overview
 
-NeuralShield is a full-stack Web Application Firewall designed to detect and block common web attacks such as SQL Injection (SQLi) and Cross-Site Scripting (XSS) in real time.
+1. Project Overview
 
-The system analyzes HTTP requests, classifies threats based on severity and confidence score, stores logs securely, and provides a centralized dashboard for monitoring and analytics.
+NeuralShield is a full-stack Web Application Firewall designed to protect web applications from common web-based attacks such as SQL Injection (SQLi) and Cross-Site Scripting (XSS).
 
--> Problem Statement
+The system analyzes incoming HTTP requests in real time, detects malicious patterns using a rule-based detection engine, blocks harmful requests, and stores detailed logs in a PostgreSQL database.
 
-Modern web applications are vulnerable to SQL Injection and XSS attacks.
-Small and Medium Enterprises (SMEs) often lack affordable and easy-to-deploy web security solutions.
+It provides a centralized administrative dashboard for monitoring, analytics, and attack history management.
 
-There is a need for a scalable, real-time, and developer-friendly protection system.
+2. Problem Statement
 
--> Key Features
+Web applications are one of the most targeted components in modern software systems. Attacks such as SQL Injection and Cross-Site Scripting can lead to:
 
-Real-time SQL Injection detection
+Unauthorized database access
 
-Real-time XSS detection
+Data breaches
 
-Automatic malicious request blocking
+Website defacement
 
-Severity classification (Low, Medium, High, Critical)
+Financial and reputational damage
 
-Confidence score calculation
+Many small and medium-scale organizations lack affordable and easy-to-deploy security solutions. Enterprise-grade Web Application Firewalls are often expensive and complex to configure.
 
-Secure attack log storage (PostgreSQL)
+There is a need for a practical, scalable, and cost-effective web security solution that provides real-time protection and centralized monitoring.
 
-Dashboard analytics using charts
+3. Objectives
 
-Admin authentication system
+The primary objectives of NeuralShield are:
 
-Log export functionality
+To detect malicious HTTP requests targeting web applications
 
-->System Architecture
+To automatically block SQL Injection and XSS attacks
 
-NeuralShield follows a three-tier architecture:
+To classify detected threats based on severity levels
 
-1️⃣ Presentation Layer
+To calculate a confidence score for each detected attack
 
-Admin Dashboard
+To store structured attack logs in a secure database
 
-Scanner Interface
+To provide a real-time analytics dashboard for administrators
 
-Attack Logs View
+4. System Architecture
 
-Analytics Charts
+NeuralShield follows a three-tier architecture to ensure modularity and scalability.
 
-2️⃣ Application Layer
+4.1 Presentation Layer
 
-Spring Boot Backend
+The presentation layer consists of:
 
-Rule-based WAF Detection Engine
+Admin login interface
 
-Business Logic Processing
+Security scanner page
 
-3️⃣ Data Layer
+Attack logs page
 
-PostgreSQL Database
+Analytics dashboard with charts
 
-Attack Log Storage
+This layer is developed using HTML, CSS, and JavaScript, with Chart.js used for visual analytics.
 
-Authentication Data
+4.2 Application Layer
 
-🛠 Technologies Used
-Frontend
+The application layer is implemented using Spring Boot and contains:
+
+REST controllers for handling requests
+
+Rule-based WAF detection engine
+
+Business logic processing
+
+Attack classification and logging mechanism
+
+This layer is responsible for analyzing requests and managing system logic.
+
+4.3 Data Layer
+
+The data layer uses PostgreSQL for persistent storage. It stores:
+
+Attack logs
+
+Severity levels
+
+Confidence scores
+
+Timestamps
+
+User authentication data
+
+5. Technologies Used
+
+Frontend:
 
 HTML
 
@@ -75,63 +101,96 @@ JavaScript
 
 Chart.js
 
-Backend
+Backend:
 
 Java
 
 Spring Boot
 
-Database
+Database:
 
 PostgreSQL
 
-Tools
+Development Tools:
 
 IntelliJ IDEA
 
-Git & GitHub
+Git and GitHub
 
--> How It Works
+6. Implemented Features
 
-User submits an HTTP request.
+NeuralShield currently includes the following implemented features:
 
-The WAF engine analyzes the request using predefined detection rules.
+Real-time SQL Injection detection
 
-If malicious patterns are found:
+Real-time XSS detection
+
+Rule-based pattern matching engine
+
+Automatic blocking of malicious requests
+
+Severity classification (Low, Medium, High, Critical)
+
+Confidence score calculation
+
+Secure storage of attack logs
+
+Dashboard-based analytics and visualization
+
+Admin authentication system
+
+Log export functionality
+
+7. Working Mechanism
+
+An HTTP request is submitted to the system.
+
+The Spring Boot backend forwards the request to the WAF detection engine.
+
+The detection engine evaluates the request using predefined attack patterns.
+
+If malicious content is detected:
 
 The request is blocked.
 
-Severity and confidence are calculated.
+Severity level is assigned.
 
-The attack is logged in PostgreSQL.
+Confidence score is calculated.
 
-Dashboard updates with real-time statistics.
+Attack details are stored in PostgreSQL.
 
--> Future Scope
+The dashboard updates in real time to reflect new attack data.
+
+8. Advantages of the System
+
+Provides real-time web attack detection
+
+Offers automatic blocking instead of passive logging
+
+Ensures centralized monitoring
+
+Maintains structured and searchable attack logs
+
+Designed with scalable architecture
+
+Suitable for small and medium-scale applications
+
+9. Future Enhancements
+
+Planned future improvements include:
 
 Machine learning-based anomaly detection
 
-IP tracking and rate limiting
+IP tracking and reputation analysis
 
-Bot detection system
+Rate limiting and bot detection
 
 Cloud-based SaaS deployment
 
-Multi-tenant architecture
+Multi-tenant enterprise architecture
 
--> Project Presentation
+10. Conclusion
 
-You can download the project presentation here:
+NeuralShield is a scalable and practical Web Application Firewall that provides real-time detection and blocking of common web attacks.
 
-Download NeuralShield PPT
-
--> Viva Documentation
-
-Detailed viva file available here:
-
-View Viva File
-
--> Conclusion
-
-NeuralShield transforms web security from passive logging into proactive protection.
-It provides real-time detection, automatic blocking, and centralized monitoring in a scalable and affordable architecture.
+By combining rule-based detection, structured logging, and centralized analytics, it offers a secure and manageable solution for web application protection. The modular architecture allows future enhancements and scalability.
