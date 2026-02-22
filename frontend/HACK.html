@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuralShield - Security Operations Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href=style.css rel="stylesheet">
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="bg-grid"></div>
+  <div class="bg-gradient-overlay"></div>
+  <div id="particles"></div>
+
+  <!-- ======================= LOGIN SCREEN ======================= -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2L4 8v8c0 7.18 5.12 13.89 12 16 6.88-2.11 12-8.82 12-16V8L16 2z" stroke="var(--accent-primary)" stroke-width="2" fill="none"/>
+          <path d="M16 8l-6 3v4c0 4.42 2.69 8.54 6 10 3.31-1.46 6-5.58 6-10v-4l-6-3z" fill="var(--accent-primary)" opacity="0.3"/>
+          <circle cx="16" cy="15" r="3" fill="var(--accent-primary)"/>
+        </svg>
+        <div class="login-title">NEURALSHIELD</div>
+        <div class="login-subtitle">Security Operations Portal</div>
+      </div>
+
+      <form id="login-form">
+        <div class="input-group">
+          <label class="input-label" for="user">Operator ID</label>
+          <input type="text" id="user" class="input" placeholder="Enter your ID" autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="pass">Access Key</label>
+          <input type="password" id="pass" class="input" placeholder="Enter password" autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn">Authenticate</button>
+        <div class="login-error" id="login-error"></div>
+      </form>
+      <div class="mt-6 text-center text-xs text-gray-500">
+        Secure Connection Established<br>
+        <span style="color: var(--success);">TLS 1.3 Encrypted</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= APP SHELL ======================= -->
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="flex items-center gap-3">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2L4 8v8c0 7.18 5.12 13.89 12 16 6.88-2.11 12-8.82 12-16V8L16 2z" stroke="var(--accent-primary)" stroke-width="2" fill="none"/>
+          <path d="M16 8l-6 3v4c0 4.42 2.69 8.54 6 10 3.31-1.46 6-5.58 6-10v-4l-6-3z" fill="var(--accent-primary)" opacity="0.3"/>
+          <circle cx="16" cy="15" r="3" fill="var(--accent-primary)"/>
+        </svg>
+        <div>
+          <div class="text-lg font-bold">NeuralShield</div>
+          <div class="text-xs text-gray-500">Security Operations</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="py-4">
+      <div class="nav-item active" data-page="dashboard">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item" data-page="scanner">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>Scanner</span>
+      </div>
+      <div class="nav-item" data-page="logs">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <span>Attack Logs</span>
+      </div>
+      <div class="nav-item" data-page="cases">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+        <span>Incident Cases</span>
+      </div>
+      <div class="nav-item" data-page="reports">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <path d="M14 2v6h6"/>
+          <path d="M9 15l2 2 4-4"/>
+        </svg>
+        <span>Reports</span>
+      </div>
+    </nav>
+
+    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-700">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-cyan-900 flex items-center justify-center">
+          <span class="text-xs font-bold">SO</span>
+        </div>
+        <div class="flex-1">
+          <div class="text-sm font-medium">SOC Analyst</div>
+          <div class="text-xs text-gray-500">Level 2 Operator</div>
+        </div>
+        <button id="logoutBtn" class="text-gray-400 hover:text-red-400 transition-colors" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Menu Toggle -->
+  <button class="fixed top-4 left-4 z-50 p-2 bg-gray-800 rounded-lg md:hidden" id="menuToggle" style="display: none;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Page -->
+    <div class="page active" id="page-dashboard">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-bold mb-1">Security Dashboard</h1>
+          <p class="text-gray-400 text-sm">Real-time threat monitoring and analysis</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 text-sm text-gray-400">
+            <span class="status-dot open pulse"></span>
+            <span>Live Monitoring</span>
+          </div>
+          <button class="btn btn-secondary" id="simulateBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Simulate Attack
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="card stat-card hover-lift">
+          <div class="text-gray-400 text-sm mb-2">Total Requests</div>
+          <div class="stat-value" id="stat-total">24,847</div>
+          <div class="text-xs text-gray-500 mt-2">Last 24 hours</div>
+          <svg class="stat-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+
+        <div class="card stat-card hover-lift">
+          <div class="text-gray-400 text-sm mb-2">Allowed</div>
+          <div class="stat-value" style="background: linear-gradient(135deg, var(--success), #34d399);" id="stat-allowed">23,891</div>
+          <div class="text-xs text-gray-500 mt-2">96.1% pass rate</div>
+        </div>
+
+        <div class="card stat-card hover-lift">
+          <div class="text-gray-400 text-sm mb-2">Blocked</div>
+          <div class="stat-value" style="background: linear-gradient(135deg, var(--danger), #f87171);" id="stat-blocked">956</div>
+          <div class="text-xs text-gray-500 mt-2">3.9% block rate</div>
+        </div>
+
+        <div class="card stat-card hover-lift">
+          <div class="text-gray-400 text-sm mb-2">Active Cases</div>
+          <div class="stat-value" id="stat-cases">12</div>
+          <div class="text-xs text-gray-500 mt-2">3 critical</div>
+        </div>
+      </div>
+
+      <!-- Charts and Feed -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Attack Types Pie -->
+        <div class="card">
+          <h3 class="font-semibold mb-4"></h3>
+          <div class="flex items-center gap-6">
+            <div class="pie-chart" id="pieChart"></div>
+            <div class="flex-1" id="pieLegend"></div>
+          </div>
+        </div>
+
+        <!-- Severity Chart -->
+        <div class="card">
+          <h3 class="font-semibold mb-4">Severity Breakdown</h3>
+          <div class="space-y-4" id="severityChart">
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Critical</span>
+                <span class="font-mono" id="sev-critical">23</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill" style="width: 23%; background: var(--critical);" data-severity="critical"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">High</span>
+                <span class="font-mono" id="sev-high">89</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill" style="width: 45%; background: var(--high);" data-severity="high"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Medium</span>
+                <span class="font-mono" id="sev-medium">234</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill" style="width: 67%; background: var(--medium);" data-severity="medium"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Low</span>
+                <span class="font-mono" id="sev-low">610</span>
+              </div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill" style="width: 89%; background: var(--low);" data-severity="low"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Feed -->
+        <div class="card">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-semibold">Live Attack Feed</h3>
+            <span class="text-xs text-gray-500 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 pulse"></span>
+              Live
+            </span>
+          </div>
+          <div class="space-y-2 max-h-64 overflow-y-auto" id="liveFeed">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Attack Type Counts -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="card text-center">
+          <div class="text-3xl font-bold text-red-400 mb-1" id="count-sqli">342</div>
+          <div class="text-sm text-gray-400">SQL Injection</div>
+          <div class="mitre-badge mt-2 mx-auto w-fit text-xs">T1190</div>
+        </div>
+        <div class="card text-center">
+          <div class="text-3xl font-bold text-orange-400 mb-1" id="count-xss">287</div>
+          <div class="text-sm text-gray-400">Cross-Site Scripting</div>
+          <div class="mitre-badge mt-2 mx-auto w-fit text-xs">T1059</div>
+        </div>
+        <div class="card text-center">
+          <div class="text-3xl font-bold text-yellow-400 mb-1" id="count-brute">156</div>
+          <div class="text-sm text-gray-400">Brute Force</div>
+          <div class="mitre-badge mt-2 mx-auto w-fit text-xs">T1110</div>
+        </div>
+        <div class="card text-center">
+          <div class="text-3xl font-bold text-blue-400 mb-1" id="count-scan">171</div>
+          <div class="text-sm text-gray-400">Port Scan</div>
+          <div class="mitre-badge mt-2 mx-auto w-fit text-xs">T1595</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scanner Page -->
+    <div class="page" id="page-scanner">
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold mb-1">Request Scanner</h1>
+        <p class="text-gray-400 text-sm">Analyze HTTP requests for malicious payloads</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="card">
+          <h3 class="font-semibold mb-4">Input Request</h3>
+          
+          <div class="mb-4">
+            <label class="block text-sm text-gray-400 mb-2">Request Method</label>
+            <select class="input" id="scanMethod">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm text-gray-400 mb-2">Target URL</label>
+            <input type="text" class="input" id="scanUrl" placeholder="/api/users?id=1">
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm text-gray-400 mb-2">Headers (JSON)</label>
+            <textarea class="input font-mono text-sm" id="scanHeaders" rows="3" placeholder='{"Authorization": "Bearer token"}'></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm text-gray-400 mb-2">Request Body</label>
+            <textarea class="input textarea font-mono text-sm" id="scanBody" placeholder="Enter payload or request body..."></textarea>
+          </div>
+
+          <button class="btn btn-primary w-full" id="analyzeBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Analyze Request
+          </button>
+        </div>
+
+        <div class="card">
+          <h3 class="font-semibold mb-4">Analysis Result</h3>
+          <div id="scanResult" class="text-gray-400 text-sm">
+            Submit a request to begin analysis...
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Test Payloads -->
+      <div class="card mt-6">
+        <h3 class="font-semibold mb-4">Test Payloads</h3>
+        <div class="flex flex-wrap gap-2">
+          <button class="btn btn-secondary text-xs" data-payload="' OR '1'='1">SQLi Basic</button>
+          <button class="btn btn-secondary text-xs" data-payload="1; DROP TABLE users--">SQLi Destructive</button>
+          <button class="btn btn-secondary text-xs" data-payload="<script>alert('XSS')</script>">XSS Basic</button>
+          <button class="btn btn-secondary text-xs" data-payload="<img src=x onerror=alert(1)>">XSS Img</button>
+          <button class="btn btn-secondary text-xs" data-payload="../../../etc/passwd">Path Traversal</button>
+          <button class="btn btn-secondary text-xs" data-payload="{{constructor.constructor('return this')().process.mainModule.require('child_process').exec('id')}}">SSTI</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attack Logs Page -->
+    <div class="page" id="page-logs">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-bold mb-1">Attack Logs</h1>
+          <p class="text-gray-400 text-sm">Comprehensive log of all detected threats</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-secondary" id="exportLogsBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export
+          </button>
+          <button class="btn btn-danger" id="clearLogsBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            Clear Logs
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-6">
+        <div class="flex flex-wrap gap-4">
+          <div class="flex-1 min-w-48">
+            <label class="block text-xs text-gray-400 mb-1">Search</label>
+            <input type="text" class="input text-sm" id="logSearch" placeholder="Search IP, attack type...">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Severity</label>
+            <select class="input text-sm" id="logSeverityFilter">
+              <option value="all">All Severities</option>
+              <option value="critical">Critical</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Type</label>
+            <select class="input text-sm" id="logTypeFilter">
+              <option value="all">All Types</option>
+              <option value="sqli">SQL Injection</option>
+              <option value="xss">XSS</option>
+              <option value="bruteforce">Brute Force</option>
+              <option value="scan">Port Scan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Table -->
+      <div class="card p-0 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Source IP</th>
+                <th>Attack Type</th>
+                <th>Severity</th>
+                <th>Confidence</th>
+                <th>MITRE</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="logsTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incident Cases Page -->
+    <div class="page" id="page-cases">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-bold mb-1">Incident Cases</h1>
+          <p class="text-gray-400 text-sm">Automated forensic case management</p>
+        </div>
+        <div class="flex gap-2">
+          <select class="input text-sm w-40" id="caseStatusFilter">
+            <option value="all">All Status</option>
+            <option value="open">Open</option>
+            <option value="investigating">Investigating</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="card text-center">
+          <div class="text-2xl font-bold text-red-400" id="case-open">5</div>
+          <div class="text-sm text-gray-400">Open</div>
+        </div>
+        <div class="card text-center">
+          <div class="text-2xl font-bold text-yellow-400" id="case-investigating">4</div>
+          <div class="text-sm text-gray-400">Investigating</div>
+        </div>
+        <div class="card text-center">
+          <div class="text-2xl font-bold text-green-400" id="case-closed">3</div>
+          <div class="text-sm text-gray-400">Closed</div>
+        </div>
+      </div>
+
+      <!-- Cases List -->
+      <div id="casesList">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- Reports Page -->
+    <div class="page" id="page-reports">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="text-2xl font-bold mb-1">Investigation Reports</h1>
+          <p class="text-gray-400 text-sm">Forensic analysis and remediation guidance</p>
+        </div>
+        <button class="btn btn-primary" id="generateReportBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+          Generate Full Report
+        </button>
+      </div>
+
+      <!-- Case Selector -->
+      <div class="card mb-6">
+        <label class="block text-sm text-gray-400 mb-2">Select Case for Report</label>
+        <select class="input" id="reportCaseSelect">
+          <option value="">Select a case...</option>
+        </select>
+      </div>
+
+      <div id="reportContent">
+        <!-- Report Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <!-- Evidence Summary -->
+          <div class="card">
+            <h3 class="font-semibold mb-4 flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Evidence Summary
+            </h3>
+            <div class="space-y-3" id="evidenceSummary">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Case ID</span>
+                <span class="font-mono" id="reportCaseId">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Evidence ID</span>
+                <span class="font-mono" id="reportEvidenceId">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Generated</span>
+                <span id="reportGenerated">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">SHA-256 Hash</span>
+                <span class="font-mono text-xs" id="reportHash">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Risk Level</span>
+                <span id="reportRiskLevel">-</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Logs Involved</span>
+                <span id="reportLogsCount">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MITRE Mapping -->
+          <div class="card">
+            <h3 class="font-semibold mb-4 flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+              MITRE ATT&CK Mapping
+            </h3>
+            <div id="mitreMapping" class="space-y-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="card mb-6">
+          <h3 class="font-semibold mb-4 flex items-center gap-2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Attack Timeline Reconstruction
+          </h3>
+          <div id="timeline" class="ml-2">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- AI Summary -->
+        <div class="card mb-6">
+          <h3 class="font-semibold mb-4 flex items-center gap-2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2">
+              <path d="M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2z"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            AI Investigation Summary
+          </h3>
+          <div id="aiSummary" class="text-gray-300 leading-relaxed">
+            Select a case to generate the investigation summary...
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="card">
+          <h3 class="font-semibold mb-4 flex items-center gap-2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Remediation Recommendations
+          </h3>
+          <div id="recommendations">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js">
+
+  </script>
+</body>
+</html>
